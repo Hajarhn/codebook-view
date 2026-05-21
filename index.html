@@ -60,6 +60,15 @@
   .topbar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand .logo { width: 32px; height: 32px; background: var(--accent); color: white; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .brand-logo {
+    height: 44px;
+    width: auto;
+    flex-shrink: 0;
+    display: block;
+  }
+  @media (max-width: 700px) {
+    .brand-logo { height: 36px; }
+  }
   .brand-text { display: flex; flex-direction: column; gap: 1px; }
   .brand-title { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; }
   .brand-sub { font-size: 11.5px; color: var(--text-muted); line-height: 1.2; }
@@ -115,6 +124,21 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .vars-table-scroll { overflow-x: auto; max-width: 100%; }
+
+  /* Top horizontal scrollbar — a thin scrollable div above the table whose
+     inner div mirrors the table's scrollWidth. JS syncs scrollLeft between
+     this and the table below, so users see horizontal scroll affordance at
+     the top of the table (not buried under 30 rows). */
+  .vars-table-topscroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .vars-table-topscroll-inner {
+    height: 12px;
+    /* width set via JS to match table.scrollWidth */
+  }
   .vars-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .vars-table th {
     text-align: left;
@@ -237,6 +261,23 @@
   }
   .pagination .btn-mini { padding: 5px 11px; }
   .pagination .btn-mini:disabled { opacity: 0.35; cursor: not-allowed; }
+  .page-size-picker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    cursor: pointer;
+  }
+  .page-size-picker select {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    background: var(--surface);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .page-size-picker select:focus { outline: none; border-color: var(--accent); }
 
   /* ============ FORMS ============ */
   label { font-size: 12px; color: var(--text-muted); margin-bottom: 5px; display: block; font-weight: 500; }
@@ -338,10 +379,11 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <div class="logo">📚</div>
+      <img src="./pcnn-logo.png" alt="Post-COVID Netwerk Nederland (PCNN) logo" class="brand-logo" onerror="this.style.display='none'; document.getElementById('brand-fallback').style.display='flex';">
+      <div class="logo" id="brand-fallback" style="display: none;">📚</div>
       <div class="brand-text">
-        <div class="brand-title">PCNN Codebook</div>
-        <div class="brand-sub">Post-COVID Network Netherlands — variable dictionary</div>
+        <div class="brand-title">Codebook</div>
+        <div class="brand-sub">PCNN variable dictionary</div>
       </div>
       <span class="version-pill">v1.1 · viewer</span>
     </div>
@@ -719,7 +761,7 @@ const FALLBACK_CODEBOOK = {
       "variable_label_EN": "Are you able to do chores such as vacuuming or yard work?",
       "value_labels_NL": "1 = Zonder enige moeite\n5 = Niet in staat om dit te doen",
       "value_labels_EN": "1 = Without any difficulty\n5 = Unable to do",
-      "value_label_FAIR_merged": "promis29_physical_function_chores",
+      "variable_name_FAIR_merged": "promis29_physical_function_chores",
       "copyright_status": "restricted"
     },
     {
@@ -732,7 +774,7 @@ const FALLBACK_CODEBOOK = {
       "variable_label_EN": "How severe was the fatigue?",
       "value_labels_NL": "0 = Geen\n4 = Zeer ernstig",
       "value_labels_EN": "0 = None\n4 = Very severe",
-      "value_label_FAIR_merged": "dsq_pem_fatigue_severity",
+      "variable_name_FAIR_merged": "dsq_pem_fatigue_severity",
       "copyright_status": "public"
     },
     {
@@ -745,7 +787,7 @@ const FALLBACK_CODEBOOK = {
       "variable_label_EN": "Age in years",
       "value_labels_NL": "",
       "value_labels_EN": "",
-      "value_label_FAIR_merged": "demographics_age_years",
+      "variable_name_FAIR_merged": "demographics_age_years",
       "copyright_status": "public"
     }
   ]
@@ -765,7 +807,7 @@ const VIEWER_FIELDS = [
   { label: "Variable label (EN)",                  key: "variable_label_EN" },
   { label: "Value label (NL)",                     key: "value_labels_NL" },
   { label: "Value label (EN)",                     key: "value_labels_EN" },
-  { label: "Standardized name (FAIR coding)",      key: "value_label_FAIR_merged" },
+  { label: "Standardized name (FAIR coding)",      key: "variable_name_FAIR_merged" },
 ];
 
 const TOOL_VERSION = "v1.1";
@@ -864,8 +906,9 @@ function applyLoadedPayload(payload, loadedFromUrl) {
 
   // Header info
   document.getElementById("info-total-vars").textContent = data.length;
-  document.getElementById("info-last-updated").textContent = meta.last_edited || "—";
-  document.getElementById("about-last-edited").textContent = meta.last_edited || "—";
+  const prettyDate = formatLastEdited(meta.last_edited);
+  document.getElementById("info-last-updated").textContent = prettyDate;
+  document.getElementById("about-last-edited").textContent = prettyDate;
   const _avc = document.getElementById("about-var-count"); if (_avc) _avc.textContent = data.length;
 
   // If we're using the fallback (not the real codebook.json), show a small
@@ -1049,12 +1092,12 @@ const COLUMN_CLASS = {
   variable_label_EN:         "col-label-en",
   value_labels_NL:           "col-value-nl",
   value_labels_EN:           "col-value-en",
-  value_label_FAIR_merged:   "col-fair",
+  variable_name_FAIR_merged:   "col-fair",
 };
 
 // Pagination settings
-const PAGE_SIZE = 30;
-const BROWSE_STATE = { currentPage: 0 };
+const PAGE_SIZE_OPTIONS = [10, 20, 30];
+const BROWSE_STATE = { currentPage: 0, pageSize: 30 };
 
 function refreshVariablesTab() {
   const inst = state.selectedInstrument;
@@ -1117,11 +1160,11 @@ function refreshVariablesTab() {
   }
 
   // Pagination: clamp current page to valid range
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(filtered.length / BROWSE_STATE.pageSize));
   if (BROWSE_STATE.currentPage >= totalPages) BROWSE_STATE.currentPage = totalPages - 1;
   if (BROWSE_STATE.currentPage < 0) BROWSE_STATE.currentPage = 0;
-  const startIdx = BROWSE_STATE.currentPage * PAGE_SIZE;
-  const endIdx = Math.min(startIdx + PAGE_SIZE, filtered.length);
+  const startIdx = BROWSE_STATE.currentPage * BROWSE_STATE.pageSize;
+  const endIdx = Math.min(startIdx + BROWSE_STATE.pageSize, filtered.length);
   const pageRows = filtered.slice(startIdx, endIdx);
 
   // Total columns: # · Actions · all VIEWER_FIELDS
@@ -1174,28 +1217,83 @@ function refreshVariablesTab() {
     </tr>`;
   }).join("");
 
-  // Pagination controls (only render if more than one page)
-  const paginationHtml = totalPages > 1 ? `
-    <div class="pagination">
+  // Pagination controls (always show the per-page selector; nav buttons only if > 1 page)
+  const navButtons = totalPages > 1 ? `
       <button class="btn-mini" onclick="goToPage(0)" ${BROWSE_STATE.currentPage === 0 ? "disabled" : ""}>« First</button>
       <button class="btn-mini" onclick="goToPage(${BROWSE_STATE.currentPage - 1})" ${BROWSE_STATE.currentPage === 0 ? "disabled" : ""}>‹ Previous</button>
-      <span class="pagination-info">
-        Showing <strong>${startIdx + 1}</strong>–<strong>${endIdx}</strong> of <strong>${filtered.length}</strong>
-        · Page <strong>${BROWSE_STATE.currentPage + 1}</strong> of <strong>${totalPages}</strong>
-      </span>
       <button class="btn-mini" onclick="goToPage(${BROWSE_STATE.currentPage + 1})" ${BROWSE_STATE.currentPage >= totalPages - 1 ? "disabled" : ""}>Next ›</button>
       <button class="btn-mini" onclick="goToPage(${totalPages - 1})" ${BROWSE_STATE.currentPage >= totalPages - 1 ? "disabled" : ""}>Last »</button>
-    </div>
   ` : "";
 
-  listEl.innerHTML = `${paginationHtml}<div class="vars-table-wrap">
+  const pageSizeSelector = `
+    <label class="page-size-picker">
+      <span style="color: var(--text-muted); font-size: 12px;">Per page:</span>
+      <select onchange="setPageSize(this.value)">
+        ${PAGE_SIZE_OPTIONS.map(n =>
+          `<option value="${n}" ${n === BROWSE_STATE.pageSize ? "selected" : ""}>${n}</option>`
+        ).join("")}
+      </select>
+    </label>`;
+
+  const paginationHtml = `
+    <div class="pagination">
+      ${pageSizeSelector}
+      <span class="pagination-info">
+        Showing <strong>${startIdx + 1}</strong>–<strong>${endIdx}</strong> of <strong>${filtered.length}</strong>${totalPages > 1 ? ` · Page <strong>${BROWSE_STATE.currentPage + 1}</strong> of <strong>${totalPages}</strong>` : ""}
+      </span>
+      ${navButtons}
+    </div>
+  `;
+
+  listEl.innerHTML = `${paginationHtml}
+  <div class="vars-table-wrap">
+    <!-- Top scroller mirrors the bottom one so users can scroll horizontally without going to the bottom of the page -->
+    <div class="vars-table-topscroll"><div class="vars-table-topscroll-inner"></div></div>
     <div class="vars-table-scroll">
       <table class="vars-table">
         <thead>${headerHtml}</thead>
         <tbody>${bodyRows}</tbody>
       </table>
     </div>
-  </div>${paginationHtml}`;
+  </div>
+  ${paginationHtml}`;
+
+  // After render: size the top-scroll inner div to the table's width, and sync scrollLeft between top and bottom.
+  syncTopScroller();
+}
+
+// Wire up the "fake" top scrollbar to mirror the real bottom one.
+function syncTopScroller() {
+  const top    = document.querySelector(".vars-table-topscroll");
+  const inner  = document.querySelector(".vars-table-topscroll-inner");
+  const bottom = document.querySelector(".vars-table-scroll");
+  const table  = bottom && bottom.querySelector(".vars-table");
+  if (!top || !inner || !bottom || !table) return;
+
+  // Mirror the table's scrollWidth onto the dummy inner div
+  const setWidth = () => { inner.style.width = table.scrollWidth + "px"; };
+  setWidth();
+
+  // Hide top scrollbar entirely if there's nothing to scroll horizontally
+  if (table.scrollWidth <= bottom.clientWidth + 1) {
+    top.style.display = "none";
+    return;
+  }
+  top.style.display = "block";
+
+  // Two-way sync — guard against echo loops
+  let syncing = false;
+  top.addEventListener("scroll", () => {
+    if (syncing) return;
+    syncing = true; bottom.scrollLeft = top.scrollLeft; syncing = false;
+  });
+  bottom.addEventListener("scroll", () => {
+    if (syncing) return;
+    syncing = true; top.scrollLeft = bottom.scrollLeft; syncing = false;
+  });
+
+  // Re-measure on window resize (column widths may reflow)
+  window.addEventListener("resize", setWidth, { passive: true });
 }
 
 function goToPage(page) {
@@ -1204,6 +1302,12 @@ function goToPage(page) {
   // Scroll table back to top when paginating
   const wrap = document.querySelector(".vars-table-wrap");
   if (wrap) wrap.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function setPageSize(n) {
+  BROWSE_STATE.pageSize = parseInt(n, 10) || 30;
+  BROWSE_STATE.currentPage = 0;
+  refreshVariablesTab();
 }
 
 // ============ SEARCH TAB ============
@@ -1788,6 +1892,30 @@ function submitSuggestion() {
 // ============ MISC HELPERS ============
 function escapeHtml(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 function escapeAttr(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+
+// Format a date from _meta.last_edited. Accepts "YYYY-MM-DD" or ISO strings;
+// falls back to the original string if we can't parse it. If empty/missing,
+// returns "—". Output: "21 May 2026" (locale-independent, short month).
+function formatLastEdited(raw) {
+  if (!raw) return "—";
+  const s = String(raw).trim();
+  // Try parsing as YYYY-MM-DD or ISO
+  const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) {
+    const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+    if (!isNaN(d)) {
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      return `${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+    }
+  }
+  // Try generic Date parsing as a last resort
+  const d = new Date(s);
+  if (!isNaN(d)) {
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  }
+  return s;  // give up, show as-is
+}
 function timestampForFilename() {
   const d = new Date();
   const pad = n => String(n).padStart(2, "0");
@@ -1839,8 +1967,9 @@ function devLoadJsonFile(event) {
       document.getElementById("workspace").style.display = "block";
       document.getElementById("fallback-banner").style.display = "none";
       document.getElementById("info-total-vars").textContent = data.length;
-      document.getElementById("info-last-updated").textContent = meta.last_edited || "—";
-      document.getElementById("about-last-edited").textContent = meta.last_edited || "—";
+      const _devPretty = formatLastEdited(meta.last_edited);
+      document.getElementById("info-last-updated").textContent = _devPretty;
+      document.getElementById("about-last-edited").textContent = _devPretty;
       const _avc = document.getElementById("about-var-count"); if (_avc) _avc.textContent = data.length;
       document.getElementById("browse-search").value = "";
       document.getElementById("search-query").value = "";
