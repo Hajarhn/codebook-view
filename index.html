@@ -21,7 +21,6 @@
   Project:     Post-COVID Network Netherlands (PCNN), funded by ZonMw
   Created:     2026
   Contact:     hajar.hasannejadasl@mumc.nl
-  LinkedIn:    https://www.linkedin.com/in/hajar-hasannejadasl/
   ================================================================================
 -->
 <html lang="en" dir="ltr">
@@ -108,69 +107,97 @@
   .panel-toolbar input[type="text"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
 
   /* ============ VARIABLES TABLE ============ */
-  .vars-table-wrap { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-  .vars-table-scroll { overflow-x: auto; }
+  .vars-table-wrap {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .vars-table-scroll { overflow-x: auto; max-width: 100%; }
   .vars-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .vars-table th {
     text-align: left;
-    padding: 11px 12px;
+    padding: 12px 14px;
     font-weight: 600;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
+    color: var(--accent-text);
+    border-bottom: 2px solid var(--border-strong);
     font-size: 10.5px;
     text-transform: uppercase;
-    letter-spacing: 0.07em;
-    background: var(--surface-2);
+    letter-spacing: 0.08em;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
     position: sticky;
     top: 0;
     z-index: 1;
     white-space: nowrap;
   }
   .vars-table td {
-    padding: 12px 12px;
+    padding: 13px 14px;
     vertical-align: top;
     border-bottom: 1px solid var(--border);
     word-break: break-word;
-    line-height: 1.5;
+    line-height: 1.55;
   }
   .vars-table tr:last-child td { border-bottom: none; }
-  .vars-table tbody tr:hover td { background: #fbfbf7; }
-  /* Subtle zebra striping for readability */
-  .vars-table tbody tr:nth-child(even) td { background: #fcfcf9; }
-  .vars-table tbody tr:nth-child(even):hover td { background: #f7f6f1; }
+  .vars-table tbody tr { transition: background-color 0.1s; }
+  .vars-table tbody tr:hover td { background: #f8f6ef; }
+  /* Subtle zebra striping */
+  .vars-table tbody tr:nth-child(even) td { background: #fcfbf6; }
+  .vars-table tbody tr:nth-child(even):hover td { background: #f5f2e8; }
 
   /* Column-specific widths and styles */
-  .vars-table .col-idx       { width: 40px;  color: var(--text-faint); font-family: var(--mono); font-size: 11px; white-space: nowrap; }
-  .vars-table .col-actions   { width: 70px;  white-space: nowrap; }
-  .vars-table .col-theme     { width: 110px; }
-  .vars-table .col-subdomain { width: 130px; color: var(--text-muted); }
-  .vars-table .col-instrument{ width: 130px; font-weight: 500; }
-  .vars-table .col-varname   { width: 150px; font-family: var(--mono); font-size: 11.5px; color: var(--accent-text); white-space: nowrap; }
-  .vars-table .col-label-nl  { min-width: 220px; max-width: 320px; }
-  .vars-table .col-label-en  { min-width: 220px; max-width: 320px; }
-  .vars-table .col-value-nl  { min-width: 200px; max-width: 280px; white-space: pre-wrap; font-size: 12px; color: var(--text-muted); }
-  .vars-table .col-value-en  { min-width: 200px; max-width: 280px; white-space: pre-wrap; font-size: 12px; color: var(--text-muted); }
-  .vars-table .col-fair      { width: 200px; font-family: var(--mono); font-size: 11.5px; color: var(--success); }
-  .vars-table td.cell-empty  { color: var(--text-faint); font-style: italic; font-size: 11.5px; }
+  .vars-table .col-idx       { width: 44px;  color: var(--text-faint); font-family: var(--mono); font-size: 11px; white-space: nowrap; text-align: right; padding-right: 8px; }
+  .vars-table .col-actions   { width: 74px;  white-space: nowrap; }
+  .vars-table .col-theme     { width: 115px; font-weight: 500; color: var(--text); }
+  .vars-table .col-subdomain { width: 130px; color: var(--text-muted); font-size: 12.5px; }
+  .vars-table .col-instrument{
+    width: 130px;
+    font-weight: 600;
+    color: var(--accent-text);
+    font-size: 12.5px;
+  }
+  .vars-table .col-varname   {
+    width: 155px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--accent);
+    white-space: nowrap;
+    background: var(--accent-bg) !important;
+    border-radius: 0;
+  }
+  .vars-table .col-label-nl  { min-width: 240px; max-width: 340px; }
+  .vars-table .col-label-en  { min-width: 240px; max-width: 340px; }
+  .vars-table .col-value-nl  { min-width: 200px; max-width: 280px; white-space: pre-wrap; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .vars-table .col-value-en  { min-width: 200px; max-width: 280px; white-space: pre-wrap; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .vars-table .col-fair      {
+    width: 210px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--success);
+  }
+  .vars-table td.cell-empty  { color: var(--text-faint); font-size: 14px; padding-top: 13px; }
 
   /* Restricted (copyright) placeholder row */
   .vars-table tr.restricted-row td {
     background: var(--warn-bg) !important;
     color: var(--warn);
-    padding: 14px 16px;
+    padding: 16px 18px;
   }
   .vars-table tr.restricted-row td .restricted-content {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     flex-wrap: wrap;
   }
-  .vars-table tr.restricted-row td .restricted-icon { font-size: 16px; }
+  .vars-table tr.restricted-row td .restricted-icon { font-size: 18px; }
   .vars-table tr.restricted-row td .restricted-name {
     font-weight: 600;
     font-style: normal;
     color: var(--warn);
-    font-size: 13px;
+    font-size: 13.5px;
+    background: rgba(255,255,255,0.5);
+    padding: 3px 10px;
+    border-radius: 12px;
   }
   .vars-table tr.restricted-row td .restricted-msg {
     font-style: italic;
@@ -178,6 +205,7 @@
     color: var(--warn);
     flex: 1;
     min-width: 200px;
+    line-height: 1.5;
   }
   .vars-table tr.restricted-row td .restricted-msg a {
     color: var(--warn);
@@ -186,6 +214,29 @@
   }
 
   .empty-state { padding: 3rem 1rem; text-align: center; color: var(--text-muted); font-size: 13px; }
+
+  /* ============ PAGINATION ============ */
+  .pagination {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+  }
+  .pagination-info {
+    flex: 1;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    min-width: 220px;
+  }
+  .pagination .btn-mini { padding: 5px 11px; }
+  .pagination .btn-mini:disabled { opacity: 0.35; cursor: not-allowed; }
 
   /* ============ FORMS ============ */
   label { font-size: 12px; color: var(--text-muted); margin-bottom: 5px; display: block; font-weight: 500; }
@@ -228,6 +279,33 @@
   a { color: var(--accent); }
   hr.sep { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 
+  /* ============ FORM-ROW (Suggest modal) ============ */
+  .form-row { margin-bottom: 12px; }
+  .form-row label { margin-bottom: 4px; }
+  .form-row input[type="text"],
+  .form-row select,
+  .form-row textarea {
+    width: 100%;
+    padding: 8px 11px;
+    font-size: 13px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface);
+    font-family: inherit;
+  }
+  .form-row textarea {
+    resize: vertical;
+    min-height: 56px;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+  }
+
   /* ============ DROPDOWN MENU ============ */
   .menu-wrap { position: relative; }
   .menu-list { position: absolute; right: 0; top: calc(100% + 6px); background: var(--surface); border: 1px solid var(--border-strong); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); min-width: 220px; padding: 4px; display: none; z-index: 60; }
@@ -265,7 +343,7 @@
         <div class="brand-title">PCNN Codebook</div>
         <div class="brand-sub">Post-COVID Network Netherlands — variable dictionary</div>
       </div>
-      <span class="version-pill">v1.0 · viewer</span>
+      <span class="version-pill">v1.1 · viewer</span>
     </div>
     <div class="topbar-actions">
       <button class="btn-secondary" onclick="openExcelDialog()" title="Download visible variables as a styled Excel file">📊 Download Excel</button>
@@ -480,7 +558,7 @@
     <div class="modal-header">
       <div>
         <div class="modal-title">About this codebook</div>
-        <div class="modal-sub">PCNN variable dictionary — researcher viewer v1.0</div>
+        <div class="modal-sub">PCNN variable dictionary — researcher viewer v1.1</div>
       </div>
       <button class="btn-mini" onclick="closeModal('about')">Close</button>
     </div>
@@ -493,19 +571,14 @@
 
       <hr class="sep">
 
-      <p><strong>Viewer version:</strong> v1.0 · researcher viewer<br>
-      <strong>Last updated:</strong> <span id="about-last-edited">—</span><br>
-      <strong>Variables in this build:</strong> <span id="about-var-count">—</span></p>
+      <p><strong>Viewer version:</strong> v1.1 · researcher viewer<br>
+      <strong>Last updated:</strong> <span id="about-last-edited">—</span></p>
 
       <hr class="sep">
 
-      <p style="font-size: 12.5px; color: var(--text-muted);"><strong>Built by</strong> Hajar Hasannejadasl — Maastricht University Medical Centre+ (MUMC+).<br>
-      Developed within the <strong>Post-COVID Network Netherlands (PCNN)</strong>, funded by <strong>ZonMw</strong>.</p>
+      <p style="font-size: 12.5px; color: var(--text-muted);"><strong>Built by</strong> Hajar Hasannejadasl — Maastricht University Medical Centre+ (MUMC+). Developed within the <strong>Post-COVID Network Netherlands (PCNN)</strong>, funded by <strong>ZonMw</strong>.</p>
 
       <p style="margin-top: 10px; font-size: 12.5px; color: var(--text-muted);"><strong>License:</strong> Built within the PCNN project. Read-only viewer for project use; not for redistribution outside the PCNN network without permission.</p>
-
-      <p style="margin-top: 10px; font-size: 12.5px; color: var(--text-muted);"><strong>How to cite:</strong><br>
-      Hasannejadasl, H. (2026). <em>PCNN Codebook</em> (viewer v1.0) [Data dictionary]. Post-COVID Network Netherlands, funded by ZonMw.</p>
     </div>
   </div>
 </div>
@@ -522,10 +595,16 @@
     </div>
     <div class="modal-body" style="font-size: 13px; line-height: 1.8;">
       <p>For questions about the codebook, please get in touch:</p>
-      <p style="margin-top: 10px;">Hajar Hasannejadasl<br>
-      Maastricht University Medical Centre+ (MUMC+)<br>
-      <a href="mailto:hajar.hasannejadasl@mumc.nl">hajar.hasannejadasl@mumc.nl</a><br>
-      <a href="https://www.linkedin.com/in/hajar-hasannejadasl/" target="_blank" rel="noopener">LinkedIn</a></p>
+      <p style="margin-top: 10px;">
+        <strong>Hajar Hasannejadasl</strong><br>
+        Maastricht University Medical Centre+ (MUMC+)<br>
+        <a href="mailto:hajar.hasannejadasl@mumc.nl">hajar.hasannejadasl@mumc.nl</a>
+      </p>
+      <p style="margin-top: 14px;">
+        <strong>Bianca Boxma-de Klerk</strong><br>
+        Leiden University Medical Center (LUMC)<br>
+        <a href="mailto:b.m.boxma-de_klerk@lumc.nl">b.m.boxma-de_klerk@lumc.nl</a>
+      </p>
 
       <hr class="sep">
 
@@ -536,26 +615,60 @@
 
 <!-- Suggest a change modal -->
 <div class="modal-overlay" id="modal-suggest" style="display: none;">
-  <div class="modal" style="max-width: 560px;">
+  <div class="modal" style="max-width: 580px;">
     <div class="modal-header">
       <div>
-        <div class="modal-title">Suggest a change / report issue</div>
+        <div class="modal-title">Suggest a change</div>
         <div class="modal-sub">Help us keep the codebook accurate</div>
       </div>
       <button class="btn-mini" onclick="closeModal('suggest')">Close</button>
     </div>
-    <div class="modal-body" style="font-size: 13px; line-height: 1.7;">
-      <p>Found a typo? Disagree with a value label? Want a new field added? Click the button below to send an email — your default email client will open with a pre-filled template.</p>
-      <p style="margin-top: 8px; color: var(--text-muted); font-size: 12px;">Please include the <strong>variable name</strong>, what's currently in the codebook, and what it should be.</p>
+    <div class="modal-body" style="font-size: 13px; line-height: 1.6;">
 
-      <div style="margin-top: 1.25rem; text-align: center;">
-        <a class="btn-primary" style="display: inline-block; padding: 10px 22px; text-decoration: none; font-size: 13.5px;"
-           href="mailto:hajar.hasannejadasl@mumc.nl?subject=%5BPCNN%20Codebook%5D%20Suggestion%20or%20correction&body=Variable%20name%3A%20%0AWhat%27s%20wrong%3A%20%0AWhat%20should%20it%20be%3A%20%0A%0AAny%20additional%20context%3A%20">
-          ✉️ Send a suggestion by email
-        </a>
+      <p style="color: var(--text-muted); margin-bottom: 1.1rem;">Fill in what's relevant — your email client will open with everything pre-filled, so all you need to do is hit Send.</p>
+
+      <div class="form-row">
+        <label for="suggest-type">What kind of change?</label>
+        <select id="suggest-type">
+          <option value="Typo or wording fix">Typo or wording fix</option>
+          <option value="Incorrect value label">Incorrect value label</option>
+          <option value="Missing variable">Missing variable</option>
+          <option value="Incorrect FAIR / standardized name">Incorrect FAIR / standardized name</option>
+          <option value="Question about a variable">Question about a variable</option>
+          <option value="Other">Other</option>
+        </select>
       </div>
 
-      <p style="margin-top: 1rem; font-size: 11.5px; color: var(--text-faint); text-align: center;">If the button doesn't open your mail client, write to <a href="mailto:hajar.hasannejadasl@mumc.nl">hajar.hasannejadasl@mumc.nl</a> directly.</p>
+      <div class="form-row">
+        <label for="suggest-varname">Variable name (if applicable)</label>
+        <input type="text" id="suggest-varname" placeholder="e.g. promis_pf_01">
+      </div>
+
+      <div class="form-row">
+        <label for="suggest-instrument">Instrument (if applicable)</label>
+        <input type="text" id="suggest-instrument" placeholder="e.g. PROMIS-29">
+      </div>
+
+      <div class="form-row">
+        <label for="suggest-current">What's currently there</label>
+        <textarea id="suggest-current" rows="2" placeholder="What does the codebook say now?"></textarea>
+      </div>
+
+      <div class="form-row">
+        <label for="suggest-proposed">What it should be</label>
+        <textarea id="suggest-proposed" rows="2" placeholder="What's the correction or addition?"></textarea>
+      </div>
+
+      <div class="form-row">
+        <label for="suggest-name">Your name (optional)</label>
+        <input type="text" id="suggest-name" placeholder="Your name and affiliation">
+      </div>
+
+      <div id="suggest-error" class="msg msg-error" style="display: none;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('suggest')">Cancel</button>
+      <button class="btn-primary" onclick="submitSuggestion()">✉️ Open email to send</button>
     </div>
   </div>
 </div>
@@ -563,7 +676,7 @@
 </div> <!-- /app -->
 
 <footer class="site-footer">
-  Codebook Editor v1.0 · Post-COVID Network Netherlands (PCNN), funded by ZonMw ·
+  Codebook Viewer v1.1 · Post-COVID Network Netherlands (PCNN), funded by ZonMw ·
   <a href="javascript:void(0)" onclick="openModal('about')">About</a> ·
   <a href="javascript:void(0)" onclick="openModal('contact')">Contact</a> ·
   <a href="javascript:void(0)" onclick="openModal('suggest')">Suggest a change</a>
@@ -655,7 +768,7 @@ const VIEWER_FIELDS = [
   { label: "Standardized name (FAIR coding)",      key: "value_label_FAIR_merged" },
 ];
 
-const TOOL_VERSION = "v1.0";
+const TOOL_VERSION = "v1.1";
 const VIEWER_KEYS = VIEWER_FIELDS.map(f => f.key);
 const LABEL_OF = Object.fromEntries(VIEWER_FIELDS.map(f => [f.key, f.label]));
 
@@ -680,12 +793,16 @@ async function init() {
   // Set up event wiring FIRST so it works regardless of which data path runs
   document.getElementById("instrument-select").addEventListener("change", function() {
     state.selectedInstrument = this.value;
+    BROWSE_STATE.currentPage = 0;
     refreshVariablesTab();
   });
   document.getElementById("search-query").addEventListener("input", debouncedSearch);
   document.getElementById("search-mode").addEventListener("change", debouncedSearch);
   document.getElementById("search-case-sensitive").addEventListener("change", debouncedSearch);
-  document.getElementById("browse-search").addEventListener("input", refreshVariablesTab);
+  document.getElementById("browse-search").addEventListener("input", () => {
+    BROWSE_STATE.currentPage = 0;
+    refreshVariablesTab();
+  });
   document.querySelectorAll(".modal-overlay").forEach(ov => {
     ov.addEventListener("click", e => { if (e.target === ov) ov.style.display = "none"; });
   });
@@ -749,7 +866,7 @@ function applyLoadedPayload(payload, loadedFromUrl) {
   document.getElementById("info-total-vars").textContent = data.length;
   document.getElementById("info-last-updated").textContent = meta.last_edited || "—";
   document.getElementById("about-last-edited").textContent = meta.last_edited || "—";
-  document.getElementById("about-var-count").textContent = data.length;
+  const _avc = document.getElementById("about-var-count"); if (_avc) _avc.textContent = data.length;
 
   // If we're using the fallback (not the real codebook.json), show a small
   // warning banner so it's never mistaken for the real data.
@@ -835,7 +952,7 @@ function populateInstruments() {
   const select = document.getElementById("instrument-select");
   const families = detectFamilies(atomicNames);
 
-  select.innerHTML = '<option value="">— All instruments —</option>';
+  select.innerHTML = '<option value="">— Select an instrument —</option>';
   families.orphans.forEach(name => {
     select.appendChild(buildInstrumentOption(name, atomicCounts));
   });
@@ -935,12 +1052,30 @@ const COLUMN_CLASS = {
   value_label_FAIR_merged:   "col-fair",
 };
 
+// Pagination settings
+const PAGE_SIZE = 30;
+const BROWSE_STATE = { currentPage: 0 };
+
 function refreshVariablesTab() {
   const inst = state.selectedInstrument;
   const search = (document.getElementById("browse-search").value || "").toLowerCase().trim();
+  const listEl = document.getElementById("browse-list");
 
-  // Pick rows: either all (no instrument selected) or just those that belong to the instrument
-  let rows = inst ? getVarsForInstrument(inst) : state.variables.slice();
+  // Empty-state when no instrument selected: prompt the user to pick one.
+  // (We do NOT show all variables at once — the codebook is too large for that.)
+  if (!inst) {
+    document.getElementById("tab-count-vars").textContent = "0";
+    state._currentlyDisplayedRows = [];
+    listEl.innerHTML = `<div class="empty-state">
+      <div style="font-size: 38px; margin-bottom: 10px; opacity: 0.4;">📋</div>
+      <p style="font-size: 14px; margin-bottom: 4px;">Select an instrument above to browse its variables.</p>
+      <p style="font-size: 12px; color: var(--text-faint);">Or use the <strong>🔍 Search</strong> tab to search across all instruments at once.</p>
+    </div>`;
+    return;
+  }
+
+  // Pick rows that belong to the selected instrument
+  let rows = getVarsForInstrument(inst);
 
   // Copyright filter: replace restricted instruments with placeholder rows
   const restrictedAtoms = computeRestrictedAtoms();
@@ -953,7 +1088,7 @@ function refreshVariablesTab() {
     else renderRows.push(v);
   });
   [...visibleRestrictedAtoms].sort().forEach(atom => {
-    if (inst && atom !== inst) return;
+    if (atom !== inst) return;
     renderRows.push({ _placeholder: true, Instrument: atom });
   });
 
@@ -961,7 +1096,6 @@ function refreshVariablesTab() {
   const filtered = renderRows.filter(v => {
     if (!search) return true;
     if (v._placeholder) {
-      // For placeholder rows, only match against instrument name
       return String(v.Instrument || "").toLowerCase().includes(search);
     }
     return VIEWER_KEYS.some(k => {
@@ -971,38 +1105,44 @@ function refreshVariablesTab() {
   });
 
   document.getElementById("tab-count-vars").textContent = filtered.length;
+  state._currentlyDisplayedRows = filtered;
 
-  // Render table
-  const listEl = document.getElementById("browse-list");
   if (filtered.length === 0) {
-    if (state.variables.length === 0) {
-      listEl.innerHTML = `<div class="empty-state">No variables in this codebook.</div>`;
-    } else if (search) {
-      listEl.innerHTML = `<div class="empty-state">No variables match “${escapeHtml(search)}”.</div>`;
+    if (search) {
+      listEl.innerHTML = `<div class="empty-state">No variables in <strong>${escapeHtml(inst)}</strong> match “${escapeHtml(search)}”.</div>`;
     } else {
-      listEl.innerHTML = `<div class="empty-state">No variables to display.</div>`;
+      listEl.innerHTML = `<div class="empty-state">No variables in <strong>${escapeHtml(inst)}</strong>.</div>`;
     }
     return;
   }
 
+  // Pagination: clamp current page to valid range
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  if (BROWSE_STATE.currentPage >= totalPages) BROWSE_STATE.currentPage = totalPages - 1;
+  if (BROWSE_STATE.currentPage < 0) BROWSE_STATE.currentPage = 0;
+  const startIdx = BROWSE_STATE.currentPage * PAGE_SIZE;
+  const endIdx = Math.min(startIdx + PAGE_SIZE, filtered.length);
+  const pageRows = filtered.slice(startIdx, endIdx);
+
   // Total columns: # · Actions · all VIEWER_FIELDS
   const totalCols = 2 + VIEWER_FIELDS.length;
-  const headers = ["#", "Actions", ...VIEWER_FIELDS.map(f => f.label)];
 
-  // Build a TH row with column classes (so the table-layout widths come from CSS)
   const headerHtml = `<tr>
     <th class="col-idx">#</th>
     <th class="col-actions">Actions</th>
     ${VIEWER_FIELDS.map(f => `<th class="${COLUMN_CLASS[f.key] || ''}">${escapeHtml(f.label)}</th>`).join("")}
   </tr>`;
 
-  const bodyRows = filtered.map((v, i) => {
+  // Render rows. The displayed "#" is the absolute index in `filtered` so
+  // numbering stays consistent across pages. The View button passes the
+  // absolute index into state._currentlyDisplayedRows.
+  const bodyRows = pageRows.map((v, pageOffset) => {
+    const absoluteIdx = startIdx + pageOffset;
     if (v._placeholder) {
-      // Merged single cell spanning everything except # column
       const contactEmail = state.contactEmail;
       const mailtoSubject = encodeURIComponent(`[PCNN Codebook] Access request: ${v.Instrument}`);
       return `<tr class="restricted-row">
-        <td class="col-idx">${i + 1}</td>
+        <td class="col-idx">${absoluteIdx + 1}</td>
         <td colspan="${totalCols - 1}">
           <div class="restricted-content">
             <span class="restricted-icon">🔒</span>
@@ -1028,23 +1168,42 @@ function refreshVariablesTab() {
     }).join("");
 
     return `<tr>
-      <td class="col-idx">${i + 1}</td>
-      <td class="col-actions"><button class="btn-mini" onclick="openViewDialog(${i})">View</button></td>
+      <td class="col-idx">${absoluteIdx + 1}</td>
+      <td class="col-actions"><button class="btn-mini" onclick="openViewDialog(${absoluteIdx})">View</button></td>
       ${cells}
     </tr>`;
   }).join("");
 
-  // Store the filtered list for the View dialog lookup
-  state._currentlyDisplayedRows = filtered;
+  // Pagination controls (only render if more than one page)
+  const paginationHtml = totalPages > 1 ? `
+    <div class="pagination">
+      <button class="btn-mini" onclick="goToPage(0)" ${BROWSE_STATE.currentPage === 0 ? "disabled" : ""}>« First</button>
+      <button class="btn-mini" onclick="goToPage(${BROWSE_STATE.currentPage - 1})" ${BROWSE_STATE.currentPage === 0 ? "disabled" : ""}>‹ Previous</button>
+      <span class="pagination-info">
+        Showing <strong>${startIdx + 1}</strong>–<strong>${endIdx}</strong> of <strong>${filtered.length}</strong>
+        · Page <strong>${BROWSE_STATE.currentPage + 1}</strong> of <strong>${totalPages}</strong>
+      </span>
+      <button class="btn-mini" onclick="goToPage(${BROWSE_STATE.currentPage + 1})" ${BROWSE_STATE.currentPage >= totalPages - 1 ? "disabled" : ""}>Next ›</button>
+      <button class="btn-mini" onclick="goToPage(${totalPages - 1})" ${BROWSE_STATE.currentPage >= totalPages - 1 ? "disabled" : ""}>Last »</button>
+    </div>
+  ` : "";
 
-  listEl.innerHTML = `<div class="vars-table-wrap">
+  listEl.innerHTML = `${paginationHtml}<div class="vars-table-wrap">
     <div class="vars-table-scroll">
       <table class="vars-table">
         <thead>${headerHtml}</thead>
         <tbody>${bodyRows}</tbody>
       </table>
     </div>
-  </div>`;
+  </div>${paginationHtml}`;
+}
+
+function goToPage(page) {
+  BROWSE_STATE.currentPage = page;
+  refreshVariablesTab();
+  // Scroll table back to top when paginating
+  const wrap = document.querySelector(".vars-table-wrap");
+  if (wrap) wrap.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 // ============ SEARCH TAB ============
@@ -1575,6 +1734,57 @@ function closeModal(which) { const el = document.getElementById("modal-" + which
 function toggleMoreMenu() { document.getElementById("more-menu").classList.toggle("open"); }
 function closeMoreMenu()  { document.getElementById("more-menu").classList.remove("open"); }
 
+// ============ SUGGEST-A-CHANGE FORM SUBMIT ============
+// Compose a mailto: from the form fields and trigger the user's email client.
+function submitSuggestion() {
+  const type     = document.getElementById("suggest-type").value;
+  const varName  = document.getElementById("suggest-varname").value.trim();
+  const instr    = document.getElementById("suggest-instrument").value.trim();
+  const current  = document.getElementById("suggest-current").value.trim();
+  const proposed = document.getElementById("suggest-proposed").value.trim();
+  const sender   = document.getElementById("suggest-name").value.trim();
+  const errEl    = document.getElementById("suggest-error");
+  errEl.style.display = "none";
+
+  // Light validation: need at least a current OR proposed, otherwise the email has nothing
+  if (!current && !proposed) {
+    errEl.textContent = "Please fill in either what's currently there, or what it should be (or both).";
+    errEl.style.display = "block";
+    return;
+  }
+
+  const subject = `[PCNN Codebook] ${type}${varName ? `: ${varName}` : ""}`;
+
+  const bodyLines = [
+    `Type of change: ${type}`,
+    varName  ? `Variable name: ${varName}`     : "",
+    instr    ? `Instrument: ${instr}`           : "",
+    "",
+    current  ? `What's currently there:\n${current}` : "",
+    "",
+    proposed ? `What it should be:\n${proposed}` : "",
+    "",
+    sender   ? `From: ${sender}`                 : "",
+  ].filter(Boolean);
+
+  const body = bodyLines.join("\n");
+  const mailto = `mailto:${state.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // Open in same window — the mail client opens, page stays put.
+  window.location.href = mailto;
+
+  // Close the modal after a short delay so the click registers cleanly
+  setTimeout(() => {
+    closeModal("suggest");
+    // Clear the form so the next open starts fresh
+    document.getElementById("suggest-varname").value = "";
+    document.getElementById("suggest-instrument").value = "";
+    document.getElementById("suggest-current").value = "";
+    document.getElementById("suggest-proposed").value = "";
+    document.getElementById("suggest-name").value = "";
+  }, 300);
+}
+
 // ============ MISC HELPERS ============
 function escapeHtml(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 function escapeAttr(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
@@ -1631,7 +1841,7 @@ function devLoadJsonFile(event) {
       document.getElementById("info-total-vars").textContent = data.length;
       document.getElementById("info-last-updated").textContent = meta.last_edited || "—";
       document.getElementById("about-last-edited").textContent = meta.last_edited || "—";
-      document.getElementById("about-var-count").textContent = data.length;
+      const _avc = document.getElementById("about-var-count"); if (_avc) _avc.textContent = data.length;
       document.getElementById("browse-search").value = "";
       document.getElementById("search-query").value = "";
 
