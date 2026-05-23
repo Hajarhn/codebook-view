@@ -38,7 +38,7 @@ Key features:
 
 ## Quick start
 
-1. Download `codebook_viewer.html`
+1. open the link: hajarhn.github.io/codebook-viewer/`
 2. Double-click to open in any modern browser (Chrome, Edge, Firefox, Safari)
 3. The codebook loads automatically — it's bundled into the file
 
@@ -68,7 +68,6 @@ Each variable shows these fields, with these display names:
 
 When a new codebook version is released, re-download `codebook_viewer.html` from this repository and replace your local copy. The release date is shown in the **About** dialog inside the viewer.
 
-To be notified of new versions, click **Watch** at the top of this repository.
 
 ---
 
@@ -93,11 +92,6 @@ The viewer runs entirely in your browser. No data is collected, transmitted, or 
 
 ---
 
-## Citation
-
-Until a DOI is registered, please cite as:
-
-> Hasannejadasl, H. (2026). *PCNN Codebook Viewer* (v1.0) [Computer software]. Maastricht University Medical Centre+, Post-COVID Network Netherlands (PCNN).
 
 ### Acknowledgement
 
@@ -121,4 +115,4 @@ For corrections, suggestions, or questions, please email or open an issue in thi
 
 ---
 
-© 2026 Hajar Hasannejadasl. All rights reserved.
+© 2026 All rights reserved.
