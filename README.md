@@ -38,11 +38,10 @@ Key features:
 
 ## Quick start
 
-1. open the link: hajarhn.github.io/codebook-viewer/`
+1. Open the link: hajarhn.github.io/codebook-viewer/`
 2. Double-click to open in any modern browser (Chrome, Edge, Firefox, Safari)
-3. The codebook loads automatically — it's bundled into the file
+3. The codebook loads automatically 
 
-No installation, no login, no internet connection needed (except for Excel export, which loads a small library on first use).
 
 ---
 
