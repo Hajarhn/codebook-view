@@ -776,7 +776,24 @@ const FALLBACK_CODEBOOK = {
 // ====== END CODEBOOK DATA SOURCE ======
 
 
+// ============ VIEWER FIELD ALLOWLIST ============
+// The viewer shows ONLY these fields, in this order, with these display names.
+// Anything else in the JSON is silently dropped.
+const VIEWER_FIELDS = [
+  { label: "Theme",                                key: "Theme" },
+  { label: "Subdomain",                            key: "Subdomain" },
+  { label: "Instrument",                           key: "Instrument" },
+  { label: "Variable name CBS",                    key: "variable_name_CBS" },
+  { label: "Variable label (NL)",                  key: "variable_label_NL" },
+  { label: "Variable label (EN)",                  key: "variable_label_EN" },
+  { label: "Value label (NL)",                     key: "value_labels_NL" },
+  { label: "Value label (EN)",                     key: "value_labels_EN" },
+  { label: "Standardized name (FAIR coding)",      key: "variable_name_FAIR_merged" },
+];
 
+const TOOL_VERSION = "v1.1";
+const VIEWER_KEYS = VIEWER_FIELDS.map(f => f.key);
+const LABEL_OF = Object.fromEntries(VIEWER_FIELDS.map(f => [f.key, f.label]));
 
 // ============ STATE ============
 const state = {
