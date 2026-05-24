@@ -1148,7 +1148,14 @@ function refreshVariablesTab() {
   const endIdx = Math.min(startIdx + BROWSE_STATE.pageSize, filtered.length);
   const pageRows = filtered.slice(startIdx, endIdx);
 
-  
+  // Total columns: # · Actions · all VIEWER_FIELDS
+  const totalCols = 2 + VIEWER_FIELDS.length;
+
+  const headerHtml = `<tr>
+    <th class="col-idx">#</th>
+    <th class="col-actions">Actions</th>
+    ${VIEWER_FIELDS.map(f => `<th class="${COLUMN_CLASS[f.key] || ''}">${escapeHtml(f.label)}</th>`).join("")}
+  </tr>`;
 
   // Render rows. The displayed "#" is the absolute index in `filtered` so
   // numbering stays consistent across pages. The View button passes the
